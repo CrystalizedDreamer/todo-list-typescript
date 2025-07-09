@@ -1,4 +1,4 @@
-//TodoList.tsx
+
 import React, { useState } from 'react';
 
 type Todo = {
