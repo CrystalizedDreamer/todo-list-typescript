@@ -1,14 +1,43 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
-
 }
 
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
   background-color: #b0eef8;
   color: #333;
+  background-image: url(assets/images/snake-river-canyon-trail.jpg);
   background-size: cover;
+}
+#WelcomeBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  width: 100%;
+  padding-left: 2em;
+  position: fixed;
+  top: 0; left: 0;
+
+  background-color: green;
+  border-bottom: 2px solid white;
+  color: white;
+}
+#WelcomeBanner p {
+  margin: 0;
+  padding:0;
+}
+
+#InputContainer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: rgba(0, 128, 0, 0.605);
+  border: 2px solid white;
+  border-radius: 25px;
+  padding: 1rem;
 }

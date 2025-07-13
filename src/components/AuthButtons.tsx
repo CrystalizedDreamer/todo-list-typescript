@@ -10,8 +10,10 @@ const AuthButtons: React.FC = () => {
 
   return (
     <>
+    <div className="d-flex align-items-center justify-content-between" id="WelcomeBanner">
       <p>Welcome, {user?.name}</p>
       <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>
+    </div>
     </>
   );
 };
