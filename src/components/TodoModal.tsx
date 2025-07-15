@@ -22,6 +22,50 @@ const TodoModal: React.FC<TodoModalProps> = ({ todo, show, onClose, onSave }) =>
     setEditCompleted(todo?.completed || false);
   }, [todo]);
 
+
+  const modalRef = React.useRef<HTMLDivElement>(null);
+  const firstInputRef = React.useRef<HTMLInputElement>(null);
+  const lastButtonRef = React.useRef<HTMLButtonElement>(null);
+  const previouslyFocused = React.useRef<HTMLElement | null>(null);
+
+  React.useEffect(() => {
+    if (show) {
+      previouslyFocused.current = document.activeElement as HTMLElement;
+      setTimeout(() => {
+        firstInputRef.current?.focus();
+      }, 0);
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Tab') {
+          const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
+            'input, textarea, button, [tabindex]:not([tabindex="-1"])'
+          );
+          if (!focusable || focusable.length === 0) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        } else if (e.key === 'Escape') {
+          onClose();
+        }
+      };
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    } else {
+      previouslyFocused.current?.focus();
+    }
+  }, [show, onClose]);
+
   if (!show || !todo) return null;
 
   const handleSave = () => {
@@ -32,7 +76,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ todo, show, onClose, onSave }) =>
   };
 
   return (
-    <div className="modal">
+    <div className="modal" ref={modalRef} aria-modal="true" role="dialog">
       <div className="modal-content">
         <h2>Edit Task</h2>
         <div className="modal-edit-fields">
@@ -42,6 +86,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ todo, show, onClose, onSave }) =>
             value={editTask}
             onChange={e => setEditTask(e.target.value)}
             placeholder="Task Name"
+            ref={firstInputRef}
           />
           <textarea
             className="task-create-textarea"
