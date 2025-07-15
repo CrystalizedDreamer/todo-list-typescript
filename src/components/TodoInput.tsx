@@ -1,22 +1,14 @@
 import React from 'react';
 
+// Props for the TodoInput component
 interface TodoInputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onAdd: () => void;
+  onShowModal: () => void;
 }
 
-const TodoInput: React.FC<TodoInputProps> = ({ value, onChange, onAdd }) => (
+// Component to render the input for adding a new todo
+const TodoInput: React.FC<TodoInputProps> = ({ onShowModal }) => (
   <div className="fluid-container" id="InputContainer">
-  <div className="input-group" id="TodoInput">
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-      className="form-control"
-    />
-    <button onClick={onAdd} className="btn btn-primary">Add Todo</button>
-  </div>
+    <button className="btn btn-primary" onClick={onShowModal}>Create a Task</button>
   </div>
 );
 

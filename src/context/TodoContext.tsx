@@ -4,12 +4,13 @@ import type {ReactNode} from 'react';
 export type Todo = {
   id: number;
   task: string;
+  description?: string;
   completed: boolean;
 };
 
 interface TodoContextType {
   todos: Todo[];
-  addTodo: (task: string) => void;
+  addTodo: (task: string, description?: string) => void;
   toggleTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
 }
@@ -27,11 +28,12 @@ export const useTodoContext = () => {
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const addTodo = (task: string) => {
+  const addTodo = (task: string, description?: string) => {
     if (task.trim() !== '') {
       const newTodo: Todo = {
         id: Date.now(),
         task,
+        description,
         completed: false,
       };
       setTodos((prev) => [...prev, newTodo]);
